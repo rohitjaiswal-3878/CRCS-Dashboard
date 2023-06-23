@@ -11,20 +11,21 @@ import {
 } from "recharts";
 import axios from "axios";
 
-export default function TransactionChart() {
-  const [societyTotals, setSocietyTotals] = useState([]);
+export default function TransactionChart({ graphData }) {
+  // const [societyTotals, setSocietyTotals] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/api/society_totals")
-      .then((response) => {
-        setSocietyTotals(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-  console.log(societyTotals);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://127.0.0.1:5000/api/society_totals")
+  //     .then((response) => {
+  //       setSocietyTotals(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
+
+  // console.log(societyTotals);
   return (
     <div className="h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
       <strong className="text-gray-700 font-medium">Type-Wise Chart</strong>
@@ -33,7 +34,7 @@ export default function TransactionChart() {
           <BarChart
             width={500}
             height={300}
-            data={Object.entries(societyTotals)}
+            data={Object.entries(graphData)}
             margin={{
               top: 20,
               right: 10,

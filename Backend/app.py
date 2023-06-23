@@ -107,9 +107,9 @@ dataset = [
 ]
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3001"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-@app.route('/api/society_totals', methods=['GET'])
+@app.route('/api/type', methods=['GET'])
 def get_data():
     society_totals = {}
     for entry in dataset:
@@ -122,7 +122,7 @@ def get_data():
 
     return jsonify(society_totals)
 
-@app.route('/api/society', methods=['GET'])
+@app.route('/api/state', methods=['GET'])
 def get_society_totals():
     state_totals = {}
     for entry in dataset:
@@ -135,7 +135,7 @@ def get_society_totals():
     return jsonify(state_totals)
 
 
-@app.route('/api/year_wise', methods=['GET'])
+@app.route('/api/year', methods=['GET'])
 def get_year_wise():
     year_totals = {}
     for entry in dataset:
