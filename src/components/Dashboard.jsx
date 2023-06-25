@@ -8,6 +8,7 @@ import PopularProducts from "./PopularProducts";
 import axios from "axios";
 export default function Dashboard() {
   const [data, setData] = useState([]);
+  const [heads, setHeads] = useState("state");
   useEffect(() => {
     fetchData();
   }, []);
@@ -23,9 +24,9 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col gap-4">
-      <DashboardStata onDataFetch={setData} />
+      <DashboardStata onDataFetch={setData} heading={setHeads} />
       <div className="flex flex-row gap-4 w-full">
-        <TransactionChart graphData={data} />
+        <TransactionChart graphData={data} graphHead={heads} />
         <BuyerProfileChart />
       </div>
       <div className="flex flex-row gap-4 w-full">

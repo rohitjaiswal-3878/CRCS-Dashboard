@@ -9,98 +9,98 @@ dataset = [
     {
         "Id": 1,
         "State": "Maharashtra",
-        "Number_of_Societies_Registered": 563,
+        "Number_of_Societies_Registered": 12,
         "Year_of_Register": 2010,
         "Types_of_Society": "Transport",
     },
     {
         "Id": 2,
         "State": "Karnataka",
-        "Number_of_Societies_Registered": 742,
+        "Number_of_Societies_Registered": 14,
         "Year_of_Register": 2012,
         "Types_of_Society": "Labour",
     },
     {
         "Id": 3,
         "State": "Tamil Nadu",
-        "Number_of_Societies_Registered": 489,
+        "Number_of_Societies_Registered": 11,
         "Year_of_Register": 2015,
         "Types_of_Society": "Agro",
     },
     {
         "Id": 4,
         "State": "Maharashtra",
-        "Number_of_Societies_Registered": 563,
+        "Number_of_Societies_Registered": 18,
         "Year_of_Register": 2011,
         "Types_of_Society": "Others",
     },
     {
         "Id": 5,
         "State": "Uttar Pradesh",
-        "Number_of_Societies_Registered": 821,
+        "Number_of_Societies_Registered": 13,
         "Year_of_Register": 2013,
         "Types_of_Society": "Consumer",
     },
     {
         "Id": 6,
         "State": "Karnataka",
-        "Number_of_Societies_Registered": 742,
+        "Number_of_Societies_Registered": 20,
         "Year_of_Register": 2016,
         "Types_of_Society": "Multi-purpose",
     },
     {
         "Id": 7,
         "State": "Tamil Nadu",
-        "Number_of_Societies_Registered": 489,
+        "Number_of_Societies_Registered": 16,
         "Year_of_Register": 2014,
         "Types_of_Society": "Fisheries",
     },
     {
         "Id": 8,
         "State": "Maharashtra",
-        "Number_of_Societies_Registered": 563,
+        "Number_of_Societies_Registered": 10,
         "Year_of_Register": 2017,
         "Types_of_Society": "Dairy",
     },
     {
         "Id": 9,
         "State": "Uttar Pradesh",
-        "Number_of_Societies_Registered": 821,
+        "Number_of_Societies_Registered": 19,
         "Year_of_Register": 2018,
         "Types_of_Society": "Transport",
     },
     {
         "Id": 10,
         "State": "Karnataka",
-        "Number_of_Societies_Registered": 742,
+        "Number_of_Societies_Registered": 15,
         "Year_of_Register": 2019,
         "Types_of_Society": "Labour",
     },
     {
         "Id": 11,
         "State": "Tamil Nadu",
-        "Number_of_Societies_Registered": 489,
+        "Number_of_Societies_Registered": 17,
         "Year_of_Register": 2020,
         "Types_of_Society": "Agro",
     },
     {
         "Id": 12,
         "State": "Maharashtra",
-        "Number_of_Societies_Registered": 563,
+        "Number_of_Societies_Registered": 10,
         "Year_of_Register": 2021,
         "Types_of_Society": "Others",
     },
     {
         "Id": 13,
         "State": "Uttar Pradesh",
-        "Number_of_Societies_Registered": 821,
+        "Number_of_Societies_Registered": 16,
         "Year_of_Register": 2022,
         "Types_of_Society": "Consumer",
     },
     {
         "Id": 14,
         "State": "Karnataka",
-        "Number_of_Societies_Registered": 742,
+        "Number_of_Societies_Registered": 12,
         "Year_of_Register": 2023,
         "Types_of_Society": "Multi-purpose",
     },
@@ -147,6 +147,10 @@ def get_year_wise():
             year_totals[year] = registered_societies
     return jsonify(year_totals)
 
+@app.route('/api/data', methods=['GET'])
+def get_records():
+    print("from here")
+    return jsonify(dataset)
 
 if __name__ == '__main__':
     app.run(debug=True)

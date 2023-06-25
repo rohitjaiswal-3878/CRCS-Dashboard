@@ -6,11 +6,12 @@ import { IoMdAnalytics } from "react-icons/io";
 const labclass =
   "bg-white rounded-sm p-4 flex-1 flex-row border border-gray-200 flex items-center rounded-xl  justify-center";
 
-export default function DashboardStata({ onDataFetch }) {
+export default function DashboardStata({ onDataFetch, heading }) {
   const fetchData = async (param) => {
     try {
       const response = await axios.get(`http://127.0.0.1:5000/api/${param}`);
       onDataFetch(response.data);
+      heading(param);
     } catch (err) {
       console.error("error", err);
     }
@@ -19,11 +20,14 @@ export default function DashboardStata({ onDataFetch }) {
   const handleClick = (buttonName) => {
     setSelectedButton(buttonName);
   };
+  console.log(selectedButton);
   return (
     <div className="flex gap-4 w-full">
       <button
         className={classNames(
-          selectedButton === "state" ? "bg-neutral-300 " : "",
+          selectedButton === "state"
+            ? "bg-neutral-100 shadow-[0_0px_12px_-5px_rgb(179,179,179)] shadow-black"
+            : "",
           labclass
         )}
         onClick={() => {
@@ -41,7 +45,9 @@ export default function DashboardStata({ onDataFetch }) {
 
       <button
         className={classNames(
-          selectedButton === "year" ? "bg-neutral-300 " : "",
+          selectedButton === "year"
+            ? "bg-neutral-100 shadow-[0_0px_12px_-5px_rgb(179,179,179)] shadow-black"
+            : "",
           labclass
         )}
         onClick={() => {
@@ -58,7 +64,9 @@ export default function DashboardStata({ onDataFetch }) {
       </button>
       <button
         className={classNames(
-          selectedButton === "type" ? "bg-neutral-300 " : "",
+          selectedButton === "type"
+            ? "bg-neutral-100 shadow-[0_0px_12px_-5px_rgb(179,179,179)] shadow-black"
+            : "",
           labclass
         )}
         onClick={() => {
