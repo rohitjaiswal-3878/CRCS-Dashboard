@@ -9,7 +9,9 @@ import axios from "axios";
 export default function Dashboard() {
   const [data, setData] = useState([]);
   const [heads, setHeads] = useState("state");
+  const [listdata, setlistdata] = useState([]);
   useEffect(() => {
+    console.log(Object.entries(listdata));
     fetchData();
   }, []);
 
@@ -26,11 +28,15 @@ export default function Dashboard() {
     <div className="flex flex-col gap-4">
       <DashboardStata onDataFetch={setData} heading={setHeads} />
       <div className="flex flex-row gap-4 w-full">
-        <TransactionChart graphData={data} graphHead={heads} />
+        <TransactionChart
+          graphData={data}
+          graphHead={heads}
+          onRecordFetch={setlistdata}
+        />
         <BuyerProfileChart />
       </div>
       <div className="flex flex-row gap-4 w-full">
-        <RecentOrders />
+        <RecentOrders listRecords={listdata} />
       </div>
     </div>
   );

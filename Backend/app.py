@@ -6,107 +6,6 @@ from datetime import datetime
 import numpy as np
 import csv 
 
-# dataset = [
-#     {
-#         "Id": 1,
-#         "State": "Maharashtra",
-#         "Number_of_Societies_Registered": 12,
-#         "Year_of_Register": 2010,
-#         "Types_of_Society": "Transport",
-#     },
-#     {
-#         "Id": 2,
-#         "State": "Karnataka",
-#         "Number_of_Societies_Registered": 14,
-#         "Year_of_Register": 2012,
-#         "Types_of_Society": "Labour",
-#     },
-#     {
-#         "Id": 3,
-#         "State": "Tamil Nadu",
-#         "Number_of_Societies_Registered": 11,
-#         "Year_of_Register": 2015,
-#         "Types_of_Society": "Agro",
-#     },
-#     {
-#         "Id": 4,
-#         "State": "Maharashtra",
-#         "Number_of_Societies_Registered": 18,
-#         "Year_of_Register": 2011,
-#         "Types_of_Society": "Others",
-#     },
-#     {
-#         "Id": 5,
-#         "State": "Uttar Pradesh",
-#         "Number_of_Societies_Registered": 13,
-#         "Year_of_Register": 2013,
-#         "Types_of_Society": "Consumer",
-#     },
-#     {
-#         "Id": 6,
-#         "State": "Karnataka",
-#         "Number_of_Societies_Registered": 20,
-#         "Year_of_Register": 2016,
-#         "Types_of_Society": "Multi-purpose",
-#     },
-#     {
-#         "Id": 7,
-#         "State": "Tamil Nadu",
-#         "Number_of_Societies_Registered": 16,
-#         "Year_of_Register": 2014,
-#         "Types_of_Society": "Fisheries",
-#     },
-#     {
-#         "Id": 8,
-#         "State": "Maharashtra",
-#         "Number_of_Societies_Registered": 10,
-#         "Year_of_Register": 2017,
-#         "Types_of_Society": "Dairy",
-#     },
-#     {
-#         "Id": 9,
-#         "State": "Uttar Pradesh",
-#         "Number_of_Societies_Registered": 19,
-#         "Year_of_Register": 2018,
-#         "Types_of_Society": "Transport",
-#     },
-#     {
-#         "Id": 10,
-#         "State": "Karnataka",
-#         "Number_of_Societies_Registered": 15,
-#         "Year_of_Register": 2019,
-#         "Types_of_Society": "Labour",
-#     },
-#     {
-#         "Id": 11,
-#         "State": "Tamil Nadu",
-#         "Number_of_Societies_Registered": 17,
-#         "Year_of_Register": 2020,
-#         "Types_of_Society": "Agro",
-#     },
-#     {
-#         "Id": 12,
-#         "State": "Maharashtra",
-#         "Number_of_Societies_Registered": 10,
-#         "Year_of_Register": 2021,
-#         "Types_of_Society": "Others",
-#     },
-#     {
-#         "Id": 13,
-#         "State": "Uttar Pradesh",
-#         "Number_of_Societies_Registered": 16,
-#         "Year_of_Register": 2022,
-#         "Types_of_Society": "Consumer",
-#     },
-#     {
-#         "Id": 14,
-#         "State": "Karnataka",
-#         "Number_of_Societies_Registered": 12,
-#         "Year_of_Register": 2023,
-#         "Types_of_Society": "Multi-purpose",
-#     },
-# ]
-
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
@@ -125,7 +24,7 @@ def get_societies_by_type():
 
 @app.route('/api/year',methods=['GET'])
 def get_societies_by_year():
-    year_societies=get_societies('date of registration')
+    year_societies=get_societies('date_of_registration')
     return jsonify(year_societies)
 
 
@@ -140,6 +39,25 @@ def get_data():
 
     return jsonify(data)
 
+@app.route('/api/records', methods=['GET'])
+def get_bar_records():
+    selected_label = request.args.get('label')
+    selected_chart = request.args.get('chart')
+    df = pd.read_csv('data.csv')
+
+    if selected_chart == 'state':
+        filtered_data = df[df['State'] == selected_label]
+    elif selected_chart == 'type':
+        filtered_data = df[df['type'] == selected_label]
+    elif selected_chart== 'year':
+        filtered_data = df[df['date_of_registration'].str.startswith(selected_label)]
+    else :
+        return jsonify([])
+    records_json = filtered_data.to_json(orient='records')
+    return jsonify(records_json)
+
+
+
 
 def get_societies(param):
     societies={}
@@ -147,7 +65,7 @@ def get_societies(param):
         csv_reader=csv.DictReader(file)
         for row in csv_reader:
             general=row[param]
-            if(param=='date of registration'):
+            if(param=='date_of_registration'):
                 year = general.split('-')[0]
                 if year in societies:
                     societies[year]+=1

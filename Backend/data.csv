@@ -1,4 +1,4 @@
-id,Society name,State,date of registration,registration no,type
+id,Society_name,State,date_of_registration,registration_no,type
 1,Society A,Karnataka,2022-01-05,1500,labour
 2,Society B,Tamil Nadu,2021-03-12,1578,marketing
 3,Society C,Maharashtra,2000-02-28,1932,others

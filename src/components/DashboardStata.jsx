@@ -20,7 +20,6 @@ export default function DashboardStata({ onDataFetch, heading }) {
   const handleClick = (buttonName) => {
     setSelectedButton(buttonName);
   };
-  console.log(selectedButton);
   return (
     <div className="flex gap-4 w-full">
       <button

@@ -11,13 +11,45 @@ import {
 } from "recharts";
 import axios from "axios";
 
-export default function TransactionChart({ graphData, graphHead }) {
+export default function TransactionChart({
+  graphData,
+  graphHead,
+  onRecordFetch,
+}) {
   const convertFirstLetterToUpperCase = (str) => {
     if (str.length === 0) {
       return "";
     }
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+
+  const convertDataToArray = (d) => {
+    return Object.entries(d).map(([label, value]) => ({ label, value }));
+  };
+  const graphDataSet = convertDataToArray(graphData);
+
+  const [selectedBarData, setSelectedBarData] = useState([]);
+
+  const handleBarClick = async (data, index) => {
+    console.log(data.label + " clicked ");
+    setSelectedBarData(data.label);
+    const getrecordsdata = async (name) => {
+      await axios
+        .get(
+          `http://localhost:5000/api/records?label=${name}&chart=${graphHead}`
+        )
+        .then((response) => {
+          let returndata = JSON.parse(response.data);
+          console.log(returndata);
+          onRecordFetch(returndata);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getrecordsdata(data.label);
+  };
+
   return (
     <div className="h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
       <strong className="text-gray-700 font-medium">
@@ -28,7 +60,7 @@ export default function TransactionChart({ graphData, graphHead }) {
           <BarChart
             width={500}
             height={300}
-            data={Object.entries(graphData)}
+            data={graphDataSet}
             margin={{
               top: 20,
               right: 10,
@@ -37,10 +69,10 @@ export default function TransactionChart({ graphData, graphHead }) {
             }}
           >
             <CartesianGrid strokeDasharray="3 3 0 0" vertical={false} />
-            <XAxis dataKey="0" />
+            <XAxis dataKey="label" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="1" fill="#0ea5e9" />
+            <Bar dataKey="value" fill="#0ea5e9" onClick={handleBarClick} />
           </BarChart>
         </ResponsiveContainer>
       </div>
